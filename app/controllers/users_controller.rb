@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
+ #--------------------USERS--------------------# 
+
+ # INDEX 
+  def index
+    users = User.all
+    render json: users
+  end
   
-  
-  
+  # CREATE
   def create
     user = User.new(
       name: params[:name],

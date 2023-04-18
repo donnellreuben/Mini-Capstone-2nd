@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+#--------------------SESSIONS--------------------#
+  
+  # CREATE
   def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
@@ -15,4 +18,9 @@ class SessionsController < ApplicationController
       render json: {}, status: :unauthorized
     end
   end
+
+
+
+
+
 end

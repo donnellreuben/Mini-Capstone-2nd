@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-
+  before_action :authenticate_user
 #--------------------ORDERS--------------------#
 
 #INDEX
@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
 
 #CREATE
   def create_order
-    product = Product.find(params[:id])
+    product = Product.find_by(id: params[:product_id])
     calculated_subtotal = params[:quantity].to_i * product.price
     
     calculated_tax = calculated_subtotal * 0.09

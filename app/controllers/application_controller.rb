@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, unless: -> { request.format.json? }
+#--------------------APPLICATION--------------------#
 
 #CURRENT USER
   def current_user
@@ -20,13 +21,21 @@ class ApplicationController < ActionController::Base
     end
   end
 
-#AUTHENTICATE USER
+#AUTHENTICATE USER/ADMIN
   def authenticate_user
     unless current_user
       render json: {}, status: :unauthorized
     end
   end
 
+  def authenticate_admin
+    unless current_user 
+      render json: {}, status: :unauthorized
+    end
+  end
 
-  
+
+
+
+
 end
