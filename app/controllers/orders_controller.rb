@@ -10,12 +10,14 @@ class OrdersController < ApplicationController
 
 #CREATE
   def create_order
-    @order = Order.new(order_params)
-    @order.user_id = current_user.id
-    @order.subtotal = @order.product.price * @order.quantity
-    @order.tax = @order.subtotal * 0.09
-    @order.total = @order.subtotal + @order.tax
-
+    @order = Order.new(
+      user_id: params[:user_id],
+      product_id: params[:product_id],
+      quantity: params[:quantity],
+      subtotal: params[:subtotal],
+      tax: params[:tax],
+      total: params[:total]
+    )
     if @order.save
       render json: { message: "Order created successfully" }
     else

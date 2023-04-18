@@ -2,7 +2,7 @@ class User < ApplicationRecord
 
 # Associations
 
-  has many :orders
+  has_many :orders
   
   
   has_secure_password
