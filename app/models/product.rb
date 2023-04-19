@@ -5,7 +5,8 @@ class Product < ApplicationRecord
   belongs_to :supplier
   has_many :images
   has_many :orders
-
+  has_many :category_products
+  has_many :categories, through: :category_products
   #Validations
   
   # validates :name, presence: true
@@ -15,7 +16,10 @@ class Product < ApplicationRecord
   # validates :description, presence: true
   # validates :description, length: { in: 10..500 }
 
-  
+  def products
+    category_products.map(&:product)
+  end
+
   def is_discounted?
     !(price >= 10)
     # if price > 10
