@@ -1,17 +1,10 @@
 class ProductsController < ApplicationController
-  protect_from_forgery with: :exception, unless: -> { request.format.json? }
 #--------------------PRODUCTS--------------------#
 
 #INDEX
   def index                                    
     @products = Product.all
     render :index
-  end
-
-#SUPPLIER INDEX
-  def supplier_index
-    @suppliers = Supplier.all
-    render json: @suppliers
   end
 
 #CREATE
@@ -34,16 +27,6 @@ class ProductsController < ApplicationController
     end
   end
 
-#SUPPLIER CREATE
-  def supplier_create
-    @supplier = Supplier.create(
-      name: params[:name],
-      email: params[:email],
-      phone_number: params[:phone_number]
-      )
-    @supplier.save
-    render json: @supplier
-  end
 
 #SHOW
   def show                                        
@@ -51,11 +34,6 @@ class ProductsController < ApplicationController
     render :show
   end
 
-#SUPPLIER SHOW
-  def supplier_show 
-    @supplier = Supplier.find_by(id: params[:id])
-    render json: @supplier 
-  end
 
 #UPDATE
   def update            
@@ -69,16 +47,6 @@ class ProductsController < ApplicationController
     render :show
   end
 
-  #SUPPLIER UPDATE
-  def supplier_update
-    @supplier = Supplier.find_by(id: params[:id])
-    @supplier.name = params[:name]
-    @supplier.email = params[:email]
-    @supplier.phone_number = params[:phone_number]
-    @supplier.save
-    render json: @supplier
-  end
-
 
 #DESTROY
   def destroy
@@ -88,11 +56,6 @@ class ProductsController < ApplicationController
   end 
 
 
-#SUPPLIER DESTROY
-  def supplier_destroy
-    @supplier = Supplier.find_by(id: params[:id])
-    @supplier.destroy!
-    render html: "This company went bankrupt and is destroyed."
-  end
+
 #FIN
 end
