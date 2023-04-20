@@ -1,13 +1,19 @@
 class UsersController < ApplicationController
  #--------------------USERS--------------------# 
 
- # INDEX 
+
+# NEW
+  def new
+    @user = User.new
+  end
+
+# INDEX 
   def index
     users = User.all
     render json: users
   end
   
-  # CREATE
+# CREATE
   def create
     user = User.new(
       name: params[:name],
@@ -22,6 +28,8 @@ class UsersController < ApplicationController
     end
   end
 
-
-
+private
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation)
+  end
 end

@@ -4,20 +4,22 @@ class OrdersController < ApplicationController
 
 #INDEX
   def index
-    @orders = Order.where(user: current_user)
+    # @orders = Order.where(user: current_user)
+    @orders = current_user.orders
     render json: @orders
   end
 
 #CREATE
-  def create_order
-    product = Product.find_by(id: params[:product_id])
-    calculated_subtotal = params[:quantity].to_i * product.price
+  def create
+    # product = Product.find_by(id: params[:product_id])
+    # calculated_subtotal = params[:quantity].to_i * product.price
     
-    calculated_tax = calculated_subtotal * 0.09
-    calculated_total = calculated_tax + calculated_subtotal
+    # calculated_tax = calculated_subtotal * 0.09
+    # calculated_total = calculated_tax + calculated_subtotal
     
     @order = Order.new(
-      user_id: params[:user_id],
+      user_id: current_user.id,
+      status: "carted",
       product_id: params[:product_id],
       quantity: params[:quantity],
       subtotal: params[:subtotal],
@@ -25,15 +27,15 @@ class OrdersController < ApplicationController
       total: calculated_total
     )
     if @order.save
-      render json: { message: "Order created successfully" }
+      redirect_to carted_products_path
     else
-      render json: { errors: @order.errors.full_messages }
+      render :new
     end
   end
   
 
 #SHOW
-  def show_order
+  def show
     @order = Order.find(params[:id])
     if @order.user_id == current_current
       render json: @order
@@ -42,5 +44,8 @@ class OrdersController < ApplicationController
     end
   end
 
-
+private
+  def order_params
+    params.require(:order).permit(:status)
+  end
 end
