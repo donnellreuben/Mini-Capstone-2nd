@@ -35,6 +35,8 @@ Rails.application.routes.draw do
   # post "/orders" => "orders#create"
 
   #CARTED PRODUCTS
-  resources :carted_products, only: [:index, :create, :destroy]
-
+  # resources :carted_products, only: [:index, :create, :destroy]
+  get "/cart" => "carted_products#index"
+  post "/cart" => "carted_products#create"
+  delete "/cart" => "carted_products#destroy"
 end

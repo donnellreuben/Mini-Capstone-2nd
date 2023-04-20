@@ -3,17 +3,17 @@ class CartedProductsController < ApplicationController
 
 # INDEX
   def index
-    @carted_products = current_user.carted_products.where(status: "carted")
+    @carted_products = CartedProduct.order.where(status: "carted")
   end
 
 # CREATE
   def create
     @carted_product = CartedProduct.new(
-      order_id: current_user.cart["order_id"],
+      order_id: params[:order_id],
       product_id: params[:product_id],
       quantity: params[:quantity],
       price: Product.find(params[:product_id]).price,
-      status: "carted"
+
     )
     if @carted_product.save
       redirect_to carted_products_path

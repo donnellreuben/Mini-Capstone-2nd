@@ -23,13 +23,13 @@ class OrdersController < ApplicationController
       product_id: params[:product_id],
       quantity: params[:quantity],
       subtotal: params[:subtotal],
-      tax: params[:tax],
-      total: calculated_total
+      tax: params[:tax]
+      # total: calculated_total
     )
     if @order.save
-      redirect_to carted_products_path
+      render json: {message: "Order created successfully, please add the order to your cart"}
     else
-      render :new
+      render json: {error: "Seems like something went wrong :( please try again."}
     end
   end
   
